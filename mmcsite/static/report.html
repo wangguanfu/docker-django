@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="webkit" name="renderer">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="telephone=no" name="format-detection">
+
+<title>Data Report</title>
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="css/base.css" rel="stylesheet" type="text/css"/>
+<link href="css/report.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+
+    <button onclick="generatePDF()" id="pdf">Generate PDF</button>
+
+    <div class="content" id="generate">
+
+        <div class="report_title">Data Report</div>
+
+        <div class="explain">
+            <p class="created_date">File Created Date: <span id="created_date"></span></p>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">Device Information</div>
+
+            <ul class="information_column">
+                <li>Serial Number: <span id="mac"></span></li>
+                <li>Model Number: MOT_U201</li>
+                <li>Version: V1.0</li>
+            </ul>
+
+            <ul class="information_column">
+                <li>Log Interval: 0H 5M 0S</li>
+                <li>Start Mode: Start by App</li>
+                <li>Start Delay: 0D 0H 0M 0S</li>
+            </ul>
+
+            <ul class="information_column information_colume_nomargin">
+                <li>Temperature Type: °C</li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">Trip Information</div>
+
+            <ul class="information_column information_column_nomargin trip">
+                <li>Courier No.: <span id="courier"></span></li>
+                <li>Description: MOT_U201 Temperature Recording</li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">Marked Events</div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">Logging Summary</div>
+
+            <ul class="information_column">
+                <li>Highest Temperature: <span id="highest"></span> °C</li>
+                <li>Lowest Temperature: <span id="lowest"></span> °C</li>
+                <li>Average Temperature: <span id="average"></span> °C</li>
+                <li>MKT: <span id="mkt"></span> °C</li>
+            </ul>
+
+            <ul class="information_column">
+                <li>Record Mode: Stop record when full</li>
+                <li>Stop Mode: Stop by App</li>
+                <li>Data Points: <span id="points"></span></li>
+                <li>Alarm At: <span id="warning_start"></span></li>
+            </ul>
+
+            <ul class="information_column information_colume_nomargin">
+                <li>Start Time: <span id="start_time"></span></li>
+                <li>Stop Time: <span id="stop_time"></span></li>
+                <li>Elapsed Time: <span id="elapsed"></span></li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <table class="alarm_table" id="alarm_table">
+            <tr class="alarm_head">
+                <td>Alarm Zone</td>
+                <td>Alarm Delay</td>
+                <td>Total Time</td>
+                <td>No. of Violations </td>
+                <td>Status</td>
+            </tr>
+
+            <tr class="high">
+                <td>H3: over <span id="h3"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h3_total"></td>
+                <td id="h3_points"></td>
+                <td>Abnormal</td>
+            </tr>
+            <tr class="high">
+                <td>H2: over <span id="h2"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h2_total"></td>
+                <td id="h2_points"></td>
+                <td>Abnormal</td>
+            </tr>
+            <tr class="high">
+                <td>H1: over <span id="h1"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h1_total"></td>
+                <td id="h1_points"></td>
+                <td>Abnormal</td>
+            </tr>
+            <tr class="normal">
+                <td>SZ: <span id="normal"></span> °C</td>
+                <td>unlimited</td>
+                <td id="normal_total"></td>
+                <td id="normal_points"></td>
+                <td>Normal</td>
+            </tr>
+            <tr class="low">
+                <td>L1: below <span id="l1"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="l1_total"></td>
+                <td id="l1_points"></td>
+                <td>Abnormal</td>
+            </tr>
+            <tr class="low">
+                <td>L2: below <span id="l2"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="l2_total"></td>
+                <td id="l2_points"></td>
+                <td>Abnormal</td>
+            </tr>
+
+        </table>
+
+        <div id="container"></div>
+
+        <div id="chart_canvas_div">
+            <canvas id="chart_canvas"></canvas>
+        </div>
+        
+    </div>
+
+<script src="js/pikaday.min.js"></script>
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/report.js"></script>
+<script src="js/jspdf.min.js"></script>
+<script src="js/html2canvas.js"></script>
+<script src="js/html2canvas.svg.js"></script>
+<script src="js/rgbcolor.js"></script>
+<script src="js/canvg.js"></script>
+
+</body>
+</html>

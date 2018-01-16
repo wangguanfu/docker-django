@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="webkit" name="renderer">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+
+<title>产品总览</title>
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/base.css" rel="stylesheet" type="text/css">
+<link href="css/result.css" rel="stylesheet" type="text/css">
+
+<style>
+.content{
+    max-width: 1210px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+section{
+    margin-bottom: 60px;
+}
+section p{
+    float: left;
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.page-turning{
+    float: right;
+}
+
+.show-table{
+    border:1px solid #b7b7b7;
+    width: 100%;
+}
+.show-table th,
+.show-table td{
+    font-size:16px;
+    text-align:center;
+}
+.show-table th{
+    background-color:#314a5b;
+    color:#fff;
+    line-height:36px;
+    font-size: 14px;
+}
+.show-table td{
+    color:#1e1e1e;
+    line-height:48px;
+    border-top: 1px solid #b7b7b7;
+}
+#container{
+    display: none;
+    width: 1200px;
+    height: 600px;
+    margin: 0 auto;
+}
+.zhanwei{
+    height: 30px;
+}
+.return{
+    font-size: 18px;
+    line-height: 30px;
+    display: none;
+    float: right;
+}
+.return:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+<!--页眉-->
+<div class="header">
+    <a href="index.html" class="logo"><img src="img/logo.png"></a>
+</div>
+
+<div class="content">
+
+    <div onclick="showAll()" class="return">返回</div>
+    <div class="clearfix"></div>
+    <div class="zhanwei"></div>
+    <section>
+        <p>今日收货 （<span id="delivered"></span> 台）</p>
+        <div id="delivered_table_bar" class="page-turning"></div>
+        <div class="clearfix"></div>
+
+        <table class="show-table" cellspacing="0" id="delivered_table">
+            <thead>
+                <tr class="table_head">
+                    <th>快递单号</th>
+                    <th>MAC地址</th>
+                    <th>起始时间</th>
+                    <th>截止时间</th>
+                    <th>安全温度（℃）</th>
+                    <th>温度记录</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+        </table>
+
+    </section>
+
+    <section>
+        <p>今日发货 （<span id="created"></span> 台）</p>
+        <div id="created_table_bar" class="page-turning"></div>
+        <div class="clearfix"></div>
+
+        <table class="show-table" cellspacing="0" id="created_table">
+            <tr class="table_head">
+                <th>快递单号</th>
+                <th>MAC地址</th>
+                <th>起始时间</th>
+                <th>截止时间</th>
+                <th>安全温度（℃）</th>
+                <th>温度记录</th>
+                <th></th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <p>运输途中 （<span id="transit"></span> 台）</p>
+        <div id="transit_table_bar" class="page-turning"></div>
+        <div class="clearfix"></div>
+
+        <table class="show-table" cellspacing="0" id="transit_table">
+            <thead>
+                <tr class="table_head">
+                    <th>快递单号</th>
+                    <th>MAC地址</th>
+                    <th>起始时间</th>
+                    <th>安全温度（℃）</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+        </table>
+
+    </section>
+
+    <div class="chart-scroll">
+        <div id="container"></div>
+    </div>
+
+    <div id="displaybox" style="display: none;"></div>
+</div>
+
+
+
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/tableExport.js"></script>
+<script src="js/admin_show.js"></script>
+
+<script type="text/javascript">
+var date = new Date(),
+    year = date.getFullYear(),
+    month = date.getMonth() + 1,
+    date = date.getDate();
+var today = year + "-" + month + "-" + date;
+var tableDataA = [],
+    tableDataB = [],
+    tableDataC = [],
+    table_id;
+
+//今日收货
+$.ajax({
+    type:"GET",
+    contentType:"application/json;charset=utf-8",
+    url:"http://iotpilot.miaomiaoce.com/iot/order/delivered_today/?start_time=" + today + " 00:00:00&end_time=" + today +" 23:59:59",
+    dataType:"json",
+    success: function(obj)
+    {
+        if (obj.result == 0) {
+            tableDataA = obj.orders;
+            table_id = "delivered_table";
+            var total = tableDataA.length;
+            $("#delivered").html(total);
+            splitPage(1,100);
+        }
+        else{
+            alert(obj.message);
+        }
+    },
+    error: function()
+    {
+        alert("error");
+    }
+})
+
+//今日发货
+$.ajax({
+    type:"GET",
+    contentType:"application/json;charset=utf-8",
+    url:"http://iotpilot.miaomiaoce.com/iot/order/created_today/?start_time=" + today + " 00:00:00&end_time=" + today +" 23:59:59",
+    dataType:"json",
+    success: function(obj)
+    {
+        if (obj.result == 0) {
+            tableDataB = obj.orders;
+            table_id = "created_table";
+            var total = tableDataB.length;
+            $("#created").html(total);
+            splitPageB(1,100);
+        }
+        else{
+            alert(obj.message);
+        }
+    },
+    error: function()
+    {
+        alert("error");
+    }
+})
+
+//运输途中
+$.ajax({
+    type:"GET",
+    contentType:"application/json;charset=utf-8",
+    url:"http://iotpilot.miaomiaoce.com/iot/order/in_delivery/",
+    dataType:"json",
+    success: function(obj)
+    {
+        if (obj.result == 0) {
+            var allData = obj.orders;
+            tableDataC = uniqueArray(allData,"mac");
+            table_id = "transit_table";
+            var total = tableDataC.length;
+            $("#transit").html(total);
+            splitPageC(1,10);
+        }
+        else{
+            alert(obj.message);
+        }
+    },
+    error: function()
+    {
+        alert("error");
+    }
+})
+
+/*
+ * JSON数组去重
+ * @param: [array] json Array
+ * @param: [string] 唯一的key名，根据此键名进行去重
+ */
+function uniqueArray(array, key){
+    var result = [array[array.length - 1]];
+    for(var i = array.length - 2; i > 0 ; i--){
+        var item = array[i];
+        var repeat = false;
+        for (var j = 0; j < result.length; j++){
+
+            if (item[key] == result[j][key] || item[key].length < 12){
+                repeat = true;
+                break;
+            }
+        }
+        if (!repeat){
+            result.push(item);
+        }
+    }
+    return result;
+}
+</script>
+
+</body>
+</html>

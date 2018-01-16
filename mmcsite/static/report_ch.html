@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="webkit" name="renderer">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="telephone=no" name="format-detection">
+
+<title>数据报告</title>
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="css/base.css" rel="stylesheet" type="text/css"/>
+<link href="css/report.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+
+    <button onclick="generatePDF()" id="pdf">生成PDF</button>
+
+    <div class="content" id="generate">
+
+        <div class="report_title">数据报告</div>
+
+        <div class="explain">
+            <p class="created_date">文件生成时间: <span id="created_date"></span></p>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">设备信息</div>
+
+            <ul class="information_column">
+                <li>序列号: <span id="mac"></span></li>
+                <li>设备型号: MOT_U201</li>
+                <li>版本: V1.0</li>
+            </ul>
+
+            <ul class="information_column">
+                <li>记录间隔: 0H 5M 0S</li>
+                <li>启动模式: App启动</li>
+                <li>启动延时: 0D 0H 0M 0S</li>
+            </ul>
+
+            <ul class="information_column information_colume_nomargin">
+                <li>温度单位: °C</li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">物流信息</div>
+
+            <ul class="information_column information_column_nomargin trip">
+                <li>物流单号: <span id="courier"></span></li>
+                <li>描述: MOT_U201温度记录</li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">标记事件</div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="information_box">
+            <div class="information_title">记录摘要</div>
+
+            <ul class="information_column">
+                <li>最高温度: <span id="highest"></span> °C</li>
+                <li>最低温度: <span id="lowest"></span> °C</li>
+                <li>平均温度: <span id="average"></span> °C</li>
+                <li>MKT: <span id="mkt"></span> °C</li>
+            </ul>
+
+            <ul class="information_column">
+                <li>记录模式: 记满即停</li>
+                <li>停止模式: App停止</li>
+                <li>数据点数: <span id="points"></span></li>
+                <li>初始报警: <span id="warning_start"></span></li>
+            </ul>
+
+            <ul class="information_column information_colume_nomargin">
+                <li>开始时间: <span id="start_time"></span></li>
+                <li>结束时间: <span id="stop_time"></span></li>
+                <li>记录时长: <span id="elapsed"></span></li>
+            </ul>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <table class="alarm_table" id="alarm_table">
+            <tr class="alarm_head">
+                <td>温度区间</td>
+                <td>报警延迟</td>
+                <td>区间时长</td>
+                <td>温度异常次数</td>
+                <td>状态</td>
+            </tr>
+
+            <tr class="high">
+                <td>H3: 高于 <span id="h3"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h3_total"></td>
+                <td id="h3_points"></td>
+                <td>异常</td>
+            </tr>
+            <tr class="high">
+                <td>H2: 高于 <span id="h2"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h2_total"></td>
+                <td id="h2_points"></td>
+                <td>异常</td>
+            </tr>
+            <tr class="high">
+                <td>H1: 高于 <span id="h1"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="h1_total"></td>
+                <td id="h1_points"></td>
+                <td>异常</td>
+            </tr>
+            <tr class="normal">
+                <td>SZ: <span id="normal"></span> °C</td>
+                <td>无</td>
+                <td id="normal_total"></td>
+                <td id="normal_points"></td>
+                <td>正常</td>
+            </tr>
+            <tr class="low">
+                <td>L1: 低于 <span id="l1"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="l1_total"></td>
+                <td id="l1_points"></td>
+                <td>异常</td>
+            </tr>
+            <tr class="low">
+                <td>L2: 低于 <span id="l2"></span> °C</td>
+                <td>0D 0H 0M 0S (Sin)</td>
+                <td id="l2_total"></td>
+                <td id="l2_points"></td>
+                <td>异常</td>
+            </tr>
+
+        </table>
+
+        <div id="container"></div>
+
+        <div id="chart_canvas_div">
+            <canvas id="chart_canvas"></canvas>
+        </div>
+        
+    </div>
+
+<script src="js/pikaday.min.js"></script>
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/report.js"></script>
+<script src="js/jspdf.min.js"></script>
+<script src="js/html2canvas.js"></script>
+<script src="js/html2canvas.svg.js"></script>
+<script src="js/rgbcolor.js"></script>
+<script src="js/canvg.js"></script>
+
+</body>
+</html>

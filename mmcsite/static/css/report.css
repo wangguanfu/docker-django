@@ -1,0 +1,79 @@
+body{
+    background-color: #333;
+    color: #000;
+}
+#pdf{
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    line-height: 38px;
+    padding: 0 10px;
+}
+
+.content{
+    width: 1192px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px 45px 0 45px;
+}
+
+.report_title{
+    font-size: 50px;
+    color: #000;
+    line-height: 60px;
+    margin-bottom: 20px;
+}
+.explain{
+    font-size: 20px;
+    line-height: 26px;
+    display: block;
+    margin-bottom: 60px;
+}
+
+.information_box{
+    margin-bottom: 40px;
+}
+.information_title{
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: bold;
+    border-bottom: 3px solid #000;
+    margin-bottom: 5px;
+}
+.information_column{
+    float: left;
+    font-size: 16px;
+    line-height: 20px;
+    width: 360px;
+}
+.trip{
+    width: 100%;
+}
+.information_colume_nomargin{
+    margin-right: 0;
+}
+
+.alarm_table{
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
+}
+.alarm_head tr{
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 3px solid #000;
+}
+
+.high{
+    color: #ff0000;
+}
+.low{
+    color: #0000ff;
+}
+
+#container{
+    width: 1000px;
+    height: 600px;
+    margin: 50px auto 0 auto;
+}

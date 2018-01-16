@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>用户登录</h1>
+    <form action="/users/login/" method="post">
+        {% csrf_token %}
+        <p><label for="username">用户名</label><input type="text" name="username" id="username"></p>
+        <p><label for="password">密码</label><input type="text" name="password" id="password"></p>
+        <p><label for="email">邮箱</label><input type="text" name="email" id="email"></p>
+        <p><button>提交</button></p>
+    </form>
+</div>
+
+<script>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="webkit" name="renderer">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="telephone=no" name="format-detection">
+
+<title>Search</title>
+
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="css/base.css" rel="stylesheet" type="text/css"/>
+<link href="../css/pikaday.css" rel="stylesheet" type="text/css"/>
+<link href="../css/result.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--页眉-->
+<div class="header">
+    <img src="../img/logo.png" class="logo">
+    <ul class="language">
+    	<li class="ch"><a href="../index.html">中文</a></li>
+        <li class="en">English</li>
+    	<div class="clearfix"></div>
+    </ul>
+    <div class="clearfix"></div>
+
+    <nav class="navbar navbar-inverse mynav" role="navigation">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#bs-example">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+      
+        <div class="collapse navbar-collapse my-navbar" id="bs-example">
+            <ul class="nav navbar-nav">
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="index.html">Search</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="solution.html">Solution</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="download.html">App Download</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<!-- 内容 -->
+<div class="content-box"> 
+    <ul class="top">
+        <li class="col-lg-3 col-md-4 col-sm-5 col-xs-6"><div class="align-left"><span id="title"></span><span id="miaomiaoce"></span></div></li>
+        <li class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span id="num"></span> items in total</li>
+        <li class="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-3 col-sm-2 col-sm-offset-2 col-xs-3">
+             <div id="page_bar" class="pull-right"></div>
+        </li>
+        <div class="clearfix"></div>
+    </ul>
+  
+    <ul class="condition">
+        <li class="time col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="align-left">Record date from: 
+                <input type="text" id="datepicker1" onblur="focusOut('start')"> to <input type="text" id="datepicker2" onblur="focusOut('end')">
+            </div>
+        </li>
+
+        <li class="temp col-lg-4 col-md-4 col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-6">
+            <div class="align-right">
+                <input type="checkbox" id="tempbox" onclick="getTable()">
+                <span>Temperature Abnormal</span>
+                <div class="clearfix"></div>
+            </div>
+        </li>
+        <div class="clearfix"></div>
+    </ul>
+    <div id="divide"></div>
+
+    <ul class="one-top">
+        <li class="col-lg-4 col-md-5 col-sm-5 col-xs-7">
+        	<div class="align-left"><span id="title-t"></span><span id="miaomiaoce-t"></span></div>
+        </li>
+        <li class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="show-all" onclick="showAll()">All Records</li>
+        <li><a href="http://iotpilot.miaomiaoce.com/report.html" target="_blank">View Report</a></li>
+        <div class="clearfix"></div>
+    </ul>
+
+    <div class="scroll">
+        <table class="table" id="page_table">
+            <thead>
+                <tr id="tablehead">
+                    <th id="which1"></th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Safe Temperature(°C)</th>
+                    <th>Record</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <span id="no-result">No Record</span>
+    </div><!-- scroll -->
+
+    <div id="big-box">
+<!--startprint-->
+        <div id="printme">
+            <div class="chart-scroll"><div id="container"></div></div>
+            
+            <div class="analysis">
+                <img src="../img/choose.png" id="checkimg">
+                <span>Data Analysis</span>
+                <div class="clearfix"></div>
+            </div>
+            <div id="analysis-box">
+                <div class="up-result">Abnormal temp record: <span id="gong"></span> min in total</div>
+                <table id="analysis-table">
+                    <thead>
+                        <tr id="analysis-tablehead">
+                            <th id="which2"></th>
+                            <th>Date</th>
+                            <th>Beyond-range Maximum</th>
+                            <th>Duration(min)</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+<!--endprint-->
+        <input type="button" value="Printing" id="print-result" onclick="printpage()">
+        <div class="clearfix"></div>
+    </div><!-- big-box -->
+</div><!-- content-box -->
+<div id="displaybox" style="display: none"></div>
+
+<!--页脚-->
+<div class="footer">
+    <div class="shadow"></div>
+    <div class="footer-content">
+        <div class="column col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-4 col-xs-9 col-xs-offset-3">
+            <div class="auto-width">
+                <div class="title">Client</div>
+                <ul>
+                    <li><a href="http://www.tjxrlh.com" target="_blank">Xin Rui Li Hong Medical Co., Ltd.</a></li>
+                    <li><a href="http://www.huahuacaocao.net" target="_blank">HHCC Plant Technology Co., Ltd.</a></li>
+                    <li><a href="http://www.tiens.com" target="_blank">TIENS Group Co., Ltd.</a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="column col-lg-3 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-3 col-xs-5 col-xs-offset-1 nopadding">
+            <div class="title">Partner</div>
+            <ul>
+                <li><a href="http://www.sf-express.com/cn/sc/" target="_blank">S.F. Express</a></li>
+                <li><a href="http://www.yundaex.com/cn/index.php" target="_blank">Yunda Express</a></li>
+                <li><a href="http://www.cn.dhl.com/zh.html" target="_blank">DHL</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="column col-lg-3 col-md-3 col-sm-5 col-xs-6 nopadding">
+            <div class="title">Offical Wechat</div>
+            <img src="../img/weixin.png">
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="copyright">&copy; 2016 秒秒测 版权所有</div>
+</div>
+
+<script src="js/pikaday.min.js"></script>
+<script src="../js/jquery-3.1.0.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/highcharts.js"></script>
+<script src="../js/tableExport.js"></script>
+<script src="../js/result.js"></script>
+
+<script type="text/javascript">
+/*初始日期选择插件*/
+var pickerStart = new Pikaday(
+{
+    field: document.getElementById('datepicker1'),
+    firstDay: 1,
+    minDate: new Date('2010-01-01'),
+    maxDate: new Date(getNowFormatDate()),
+    yearRange: [2010,2100]
+});
+
+var pickerEnd = new Pikaday(
+{
+    field: document.getElementById('datepicker2'),
+    firstDay: 1,
+    minDate: new Date('2010-01-01'),
+    maxDate: new Date(getNowFormatDate()),
+    yearRange: [2010,2100]
+});
+
+</script>
+
+</body>
+</html>

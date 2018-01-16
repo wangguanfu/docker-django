@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="webkit" name="renderer">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+
+<title>Search</title>
+
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/base.css" rel="stylesheet" type="text/css">
+
+<style>
+.content{
+    max-width:1210px;
+    margin:0 auto;
+    background:#f8f8f8 url(../img/bg.png) no-repeat center;
+    min-height:525px;
+    padding-top:115px;
+    padding-bottom:40px;
+}
+.search{
+    max-width:750px;
+    margin:0 auto;
+}
+#way li{
+    float:left;
+    font-size:18px;
+    color:#1e1e1e;
+    line-height:38px;
+    padding:0 24px;
+    margin-bottom:8px;
+}
+#way li:hover{
+    cursor:pointer;
+}
+#way .current{
+    color:#fff;
+    background:#1e1e1e;
+}
+.search-bar{
+    position:relative;
+}
+#search-btn{
+    width: 160px;
+    font-size:24px;
+    color:#fff;
+    line-height:56px;
+    text-align:right;
+    background-color:#314a5b;
+    background-image:url(../img/search.png);
+    background-repeat:no-repeat;
+    background-position:22px center;
+    padding-right:30px;
+}
+#search-btn:hover{
+    cursor:pointer;
+}
+#search-btn,.search-inp{
+    float: left;
+}
+.search-inp{
+    width: 590px;
+    height:56px;
+    font-size:18px;
+    color:#aaa;
+    border:2px solid #69a1b2;
+    border-right:none;
+    padding-left:20px;
+    outline: none;
+}
+@media(max-width: 750px){
+    .search-inp{
+        width: auto;
+    }
+}
+.auto_hidden {
+    border: 2px solid #69a1b2;
+    border-top: none;
+    position:absolute;
+    display:none;
+}
+.auto_show {
+    border: 2px solid #69a1b2;
+    border-top: none;
+    position:absolute;
+    z-index:9999; /* 设置对象的层叠顺序 */
+    display:block;
+}
+.auto_onmouseover{
+    color:#ffffff;
+    background-color:highlight;
+    width:100%;
+}
+.auto_onmouseout{
+    color:#000000;
+    width:100%;
+    background-color:#ffffff;
+}
+#input-list{
+    font-size: 16px;
+    padding: 4px 0;
+}
+#input-list > div{
+    padding: 1px 0 1px 20px;
+}
+</style>
+</head>
+
+<body>
+<!--页眉-->
+<div class="header">
+    <img src="../img/logo.png" class="logo">
+    <ul class="language">
+        <li class="ch"><a href="../index.html">中文</a></li>
+        <li class="en">English</li>
+        <div class="clearfix"></div>
+    </ul>
+    <div class="clearfix"></div>
+
+    <nav class="navbar navbar-inverse mynav" role="navigation">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#bs-example">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+      
+        <div class="collapse navbar-collapse my-navbar" id="bs-example">
+            <ul class="nav navbar-nav">
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="index.html">Search</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="solution.html">Solution</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="download.html">App Download</a></li>
+                <li class="col-lg-3 col-md-3 col-sm-3"><a href="about.html">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>  
+
+<!--内容-->
+<div class="content">
+    <div class="search">
+        <ul id="way">
+            <li id="isid">ZenMeasure ID</li>
+            <li id="isNum">Courier No.</li>
+            <div class="clearfix"></div>
+        </ul>
+        <div class="search-bar">
+            <input class="search-inp" type="text" id="postnum" name="search" autocomplete="off">
+            <div id="input-list" class="auto_hidden"></div>
+            <div id="search-btn" onclick="searchValue()">Search</div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<!--页脚-->
+<div class="footer">
+    <div class="shadow"></div>
+    <div class="footer-content">
+        <div class="column col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-4 col-xs-9 col-xs-offset-3">
+            <div class="auto-width">
+                <div class="title">Client</div>
+                <ul>
+                    <li><a href="http://www.tjxrlh.com" target="_blank">Xin Rui Li Hong Medical Co., Ltd.</a></li>
+                    <li><a href="http://www.huahuacaocao.net" target="_blank">HHCC Plant Technology Co., Ltd.</a></li>
+                    <li><a href="http://www.tiens.com" target="_blank">TIENS Group Co., Ltd.</a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="column col-lg-3 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-3 col-xs-5 col-xs-offset-1 nopadding">
+            <div class="title">Partner</div>
+            <ul>
+                <li><a href="http://www.sf-express.com/cn/sc/" target="_blank">S.F. Express</a></li>
+                <li><a href="http://www.yundaex.com/cn/index.php" target="_blank">Yunda Express</a></li>
+                <li><a href="http://www.cn.dhl.com/zh.html" target="_blank">DHL</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="column col-lg-3 col-md-3 col-sm-5 col-xs-6 nopadding">
+            <div class="title">Offical Wechat</div>
+            <img src="../img/weixin.png">
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="copyright">&copy; 2016 秒秒测 版权所有</div>
+</div>
+
+<script src="../js/jquery-3.1.0.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/autocomplete.js"></script>
+<script src="../js/bootstrap.js"></script>
+
+<script type="text/javascript">
+var searchWay = "macId";
+var autoComplete = new AutoComplete("postnum","input-list",loadCookie("idHistory"));
+
+$(document).ready(function(){
+    $("#isid").addClass("current");
+    $("#postnum").val("Enter ZenMeasure ID");
+    $("#postnum").on("keyup",function(){
+        autoComplete.start(event);
+    });
+    $("#postnum").on("dblclick",function(){
+        autoComplete.double();
+    })
+})
+
+$("#isid").on('click',function(){
+    $(this).addClass("current").siblings().removeClass("current");
+    $("#postnum").val("Enter ZenMeasure ID");
+    $("#postnum").css("color","#aaa");
+    searchWay = "macId";
+    autoComplete = new AutoComplete('postnum','input-list',loadCookie("idHistory"));
+})
+
+$("#isNum").on('click',function(){
+    $(this).addClass("current").siblings().removeClass("current");
+    $("#postnum").val("Enter Courier No.");
+    $("#postnum").css("color","#aaa");
+    searchWay = "exNumber";
+    autoComplete = new AutoComplete('postnum','input-list',loadCookie("numHistory"));
+})
+
+/*输入框获得焦点*/
+$("#postnum").focusin(function(){
+    var theValue = document.getElementById("postnum").value;
+    if(theValue == "Enter ZenMeasure ID" || theValue == "Enter Courier No.")
+    {
+        document.getElementById("postnum").value = "";
+        document.getElementById("postnum").style.color = "#000";
+    }   
+})
+/*输入框失去焦点*/
+$("#postnum").focusout(function(){
+    var theValue = document.getElementById("postnum").value;
+    theValue = theValue.replace(/\s/g,"");
+    if(theValue == "")
+    {
+        document.getElementById("postnum").value = searchWay=="macId"? "Enter ZenMeasure ID":"Enter Courier No.";
+        document.getElementById("postnum").style.color = "#aaa";
+    }
+    //autoComplete.hide();
+})
+
+function searchValue()  
+{
+    var isVal = $("#postnum").val();
+    isVal = isVal.replace(/\s/g,"");//去掉空格
+    var isNew = true;
+    if(isVal != "Enter ZenMeasure ID" && isVal != "Enter Courier No." && isVal != "")
+    {
+        var cookieName,nextURL;
+        if(searchWay == "macId")
+        {
+            cookieName = "idHistory";
+            nextURL = "result.html?id=" + isVal + "&number=!";
+        }
+        else
+        {
+            cookieName = "numHistory";
+            nextURL = "result.html?number=" + isVal + "&id=!"
+        }
+        var inputHistory = $.cookie(cookieName);
+        if(!inputHistory)
+        {
+            $.cookie(cookieName,isVal,{expires:7});
+        }
+        else
+        {
+            for(var i=0;i<inputHistory.split(",").length;i++)
+            {
+                if(isVal == inputHistory.split(",")[i])
+                {
+                    isNew = false;
+                }
+            }
+            if(isNew)
+            {
+                inputHistory += "," + isVal;
+                $.cookie(cookieName,inputHistory,{expires:7});
+            }
+        }
+        document.location.href = nextURL;
+    }
+    else
+    {
+        alert("请输入数据！")
+    }   
+}
+
+function loadCookie(value){
+    var historyList = $.cookie(value);
+    if(!historyList)
+    {
+        return false;
+    }
+    var historyArr = [];
+    for(var i=0;i<historyList.length;i++)
+    {
+        if(historyList.split(',')[i]){
+            historyArr.push(historyList.split(',')[i]);
+        }
+    }
+    return historyArr;
+}
+
+</script>
+</body>
+</html>
